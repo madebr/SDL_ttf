@@ -43,7 +43,7 @@ compile-hlsl-dxbc() {
     local output_basename="$3"
     local var_name="$(echo "$output_basename" | sed -e 's/\./_/g')"
 
-    $FXC "$src" /E main /T $2 /Fh "$output_basename.tmp.h" || exit $?
+    $FXC "$src" -Vnmain -E main -T "$2" "-Fh$output_basename.tmp.h" || exit $?
     sed \
         -e "s/g_main/$var_name/;s/\r//g" \
         -e 's,^const,static const,' \
